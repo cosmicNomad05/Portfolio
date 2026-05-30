@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Veeksha | Full Stack Developer</title>
+  <meta name="description" content="Veeksha — Full Stack Developer skilled in React, Node.js, and modern web technologies." />
+  <meta property="og:title" content="Veeksha | Full Stack Developer" />
+  <meta property="og:description" content="Portfolio of Veeksha, a passionate Full Stack Developer building clean, functional web experiences." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Theme Variables ─────────────────── */
+    :root {
+      --bg:          #f8f9ff;
+      --bg-alt:      #eef0f8;
+      --card:        #ffffff;
+      --text:        #0f1628;
+      --text-muted:  #5a6279;
+      --accent:      #5b21b6;
+      --accent-2:    #7c3aed;
+      --accent-soft: #ede9fe;
+      --border:      #e0e4f0;
+      --nav-bg:      rgba(248,249,255,0.92);
+      --shadow:      0 4px 28px rgba(91,33,182,0.08);
+      --badge-bg:    #ede9fe;
+      --badge-text:  #5b21b6;
+    }
+    [data-theme="dark"] {
+      --bg:          #0c0e1a;
+      --bg-alt:      #141728;
+      --card:        #141728;
+      --text:        #eef0fb;
+      --text-muted:  #8892b0;
+      --accent:      #a78bfa;
+      --accent-2:    #c4b5fd;
+      --accent-soft: #1e1040;
+      --border:      #242840;
+      --nav-bg:      rgba(12,14,26,0.95);
+      --shadow:      0 4px 28px rgba(0,0,0,0.4);
+      --badge-bg:    #2e1065;
+      --badge-text:  #c4b5fd;
+    }
+
+    /* ── Reset ───────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Manrope', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      transition: background .3s, color .3s;
+    }
+
+    /* ── Utilities ───────────────────────── */
+    .container  { max-width: 1080px; margin: 0 auto; padding: 0 28px; }
+    section     { padding: 88px 0; }
+    .tag        { display: inline-block; background: var(--badge-bg); color: var(--badge-text);
+                  font-size: 12px; font-weight: 700; letter-spacing: .5px;
+                  padding: 4px 12px; border-radius: 99px; }
+    .section-eyebrow { font-size: 11px; font-weight: 800; letter-spacing: 2.5px;
+                       text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+    .section-title   { font-family: 'Libre Baskerville', serif; font-size: clamp(26px,4vw,40px);
+                       line-height: 1.2; margin-bottom: 12px; }
+    .section-rule    { width: 44px; height: 3px; background: var(--accent);
+                       border-radius: 2px; margin-bottom: 52px; }
+    .btn {
+      display: inline-block; padding: 12px 28px; border-radius: 10px;
+      font-family: 'Manrope', sans-serif; font-size: 14px; font-weight: 700;
+      text-decoration: none; cursor: pointer; transition: transform .15s, box-shadow .15s;
+      border: none;
+    }
+    .btn:hover  { transform: translateY(-2px); box-shadow: var(--shadow); }
+    .btn-primary{ background: var(--accent); color: #fff; }
+    .btn-outline{ background: transparent; color: var(--accent);
+                  border: 2px solid var(--accent); }
+    .btn-outline:hover { background: var(--accent-soft); }
+
+    /* ── Navbar ──────────────────────────── */
+    header {
+      position: fixed; top: 0; width: 100%; z-index: 200;
+      background: var(--nav-bg); backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      transition: background .3s, border-color .3s;
+    }
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      height: 64px;
+    }
+    .nav-logo {
+      font-family: 'Libre Baskerville', serif; font-size: 20px; font-weight: 700;
+      color: var(--text); text-decoration: none;
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; align-items: center; gap: 2px; }
+    .nav-links a {
+      color: var(--text-muted); text-decoration: none; font-size: 14px; font-weight: 600;
+      padding: 8px 14px; border-radius: 8px; transition: color .2s, background .2s;
+    }
+    .nav-links a:hover  { color: var(--accent); background: var(--accent-soft); }
+    .nav-right { display: flex; align-items: center; gap: 12px; }
+    #theme-btn {
+      width: 40px; height: 40px; border-radius: 8px; background: var(--bg-alt);
+      border: 1px solid var(--border); cursor: pointer; font-size: 18px;
+      display: flex; align-items: center; justify-content: center;
+      transition: background .2s; color: var(--text);
+    }
+    #theme-btn:hover { background: var(--accent-soft); }
+    .hamburger {
+      display: none; flex-direction: column; gap: 5px;
+      background: none; border: none; cursor: pointer; padding: 4px;
+    }
+    .hamburger span {
+      display: block; width: 24px; height: 2px;
+      background: var(--text); border-radius: 2px; transition: all .25s;
+    }
+    #mobile-menu {
+      display: none; flex-direction: column; gap: 4px;
+      padding: 12px 24px 20px; border-top: 1px solid var(--border);
+      background: var(--nav-bg);
+    }
+    #mobile-menu a {
+      padding: 10px 12px; border-radius: 8px; font-size: 14px; font-weight: 600;
+      color: var(--text-muted); text-decoration: none;
+    }
+    #mobile-menu a:hover { color: var(--accent); background: var(--accent-soft); }
+    #mobile-menu.open { display: flex; }
+
+    /* ── Hero ────────────────────────────── */
+    #hero {
+      min-height: 100vh; display: flex; align-items: center;
+      padding-top: 64px; position: relative; overflow: hidden;
+    }
+    .hero-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 48px; align-items: center;
+    }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: var(--accent-soft); padding: 6px 16px; border-radius: 99px;
+      font-size: 13px; font-weight: 700; color: var(--accent); margin-bottom: 24px;
+    }
+    .hero-eyebrow::before { content: ''; width: 8px; height: 8px; border-radius: 50%;
+      background: var(--accent); animation: pulse 2s infinite; }
+    @keyframes pulse {
+      0%,100% { opacity: 1; transform: scale(1); }
+      50%      { opacity: .5; transform: scale(1.4); }
+    }
+    .hero-name {
+      font-family: 'Libre Baskerville', serif;
+      font-size: clamp(38px, 5.5vw, 68px);
+      line-height: 1.1; margin-bottom: 16px;
+    }
+    .hero-name em { font-style: italic; color: var(--accent); }
+    .hero-sub {
+      font-size: clamp(15px,2vw,18px); color: var(--text-muted);
+      max-width: 460px; margin-bottom: 36px; font-weight: 400;
+    }
+    .hero-btns  { display: flex; gap: 14px; flex-wrap: wrap; }
+    .hero-visual {
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+    }
+    .hero-avatar {
+      width: 300px; height: 300px; border-radius: 48% 52% 60% 40% / 44% 48% 52% 56%;
+      background: linear-gradient(135deg, var(--accent-soft) 0%, var(--accent) 100%);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Libre Baskerville', serif; font-size: 72px; font-weight: 700;
+      color: #fff; position: relative; z-index: 1;
+      box-shadow: 0 24px 64px rgba(91,33,182,.2);
+    }
+    .hero-dots {
+      position: absolute; inset: -24px; z-index: 0;
+      background-image: radial-gradient(var(--accent) 1.5px, transparent 1.5px);
+      background-size: 24px 24px; opacity: .15;
+    }
+
+    /* ── About ───────────────────────────── */
+    #about { background: var(--bg-alt); }
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1.6fr;
+      gap: 56px; align-items: start;
+    }
+    .about-card {
+      background: var(--card); border-radius: 20px; padding: 32px;
+      border: 1px solid var(--border); text-align: center;
+      box-shadow: var(--shadow);
+    }
+    .about-initials {
+      width: 80px; height: 80px; border-radius: 24px;
+      background: linear-gradient(135deg, var(--accent-soft), var(--accent));
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Libre Baskerville', serif; font-size: 28px; font-weight: 700;
+      color: #fff; margin: 0 auto 16px;
+    }
+    .about-card h3 { font-family: 'Libre Baskerville', serif; font-size: 22px; margin-bottom: 4px; }
+    .about-card p  { color: var(--text-muted); font-size: 14px; margin-bottom: 20px; }
+    .about-stat-row {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 20px;
+    }
+    .about-stat {
+      background: var(--bg-alt); border-radius: 12px; padding: 14px;
+    }
+    .about-stat-num {
+      font-family: 'Libre Baskerville', serif; font-size: 24px; font-weight: 700;
+      color: var(--accent);
+    }
+    .about-stat-label { font-size: 11px; color: var(--text-muted); font-weight: 600; }
+    .about-body h2 { font-family: 'Libre Baskerville', serif; font-size: 30px; margin-bottom: 16px; }
+    .about-body p  { color: var(--text-muted); margin-bottom: 16px; font-size: 15px; }
+    .about-tags    { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
+
+    /* ── Skills ──────────────────────────── */
+    .skills-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px;
+    }
+    .skill-card {
+      background: var(--card); border: 1px solid var(--border); border-radius: 16px;
+      padding: 24px; box-shadow: var(--shadow); transition: transform .2s, box-shadow .2s;
+    }
+    .skill-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(91,33,182,.12); }
+    .skill-icon { font-size: 32px; margin-bottom: 12px; }
+    .skill-card h4 { font-size: 14px; font-weight: 800; margin-bottom: 10px; color: var(--accent); text-transform: uppercase; letter-spacing: .5px; }
+    .skill-list { display: flex; flex-wrap: wrap; gap: 6px; }
+    .skill-pill {
+      background: var(--bg-alt); color: var(--text-muted); font-size: 12px;
+      font-weight: 600; padding: 4px 10px; border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+
+    /* ── Projects ────────────────────────── */
+    #projects { background: var(--bg-alt); }
+    .projects-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px;
+    }
+    .project-card {
+      background: var(--card); border: 1px solid var(--border); border-radius: 20px;
+      overflow: hidden; box-shadow: var(--shadow); transition: transform .2s, box-shadow .2s;
+      display: flex; flex-direction: column;
+    }
+    .project-card:hover { transform: translateY(-6px); box-shadow: 0 16px 48px rgba(91,33,182,.14); }
+    .project-banner {
+      height: 140px; display: flex; align-items: center; justify-content: center;
+      font-size: 48px;
+    }
+    .project-body { padding: 24px; flex: 1; display: flex; flex-direction: column; gap: 10px; }
+    .project-body h3 { font-family: 'Libre Baskerville', serif; font-size: 18px; }
+    .project-body p  { color: var(--text-muted); font-size: 13px; line-height: 1.7; flex: 1; }
+    .project-tags    { display: flex; flex-wrap: wrap; gap: 6px; }
+    .project-links   { display: flex; gap: 10px; margin-top: 8px; }
+    .project-links a {
+      font-size: 12px; font-weight: 700; color: var(--accent);
+      text-decoration: none; border: 1px solid var(--accent);
+      padding: 5px 14px; border-radius: 8px; transition: background .15s;
+    }
+    .project-links a:hover { background: var(--accent-soft); }
+
+    /* ── Contact ─────────────────────────── */
+    .contact-wrapper {
+      display: grid; grid-template-columns: 1fr 1.5fr; gap: 48px; align-items: start;
+    }
+    .contact-info h2 { font-family: 'Libre Baskerville', serif; font-size: 30px; margin-bottom: 12px; }
+    .contact-info p  { color: var(--text-muted); font-size: 15px; margin-bottom: 28px; }
+    .contact-detail {
+      display: flex; align-items: center; gap: 12px; margin-bottom: 16px;
+      font-size: 14px; color: var(--text-muted);
+    }
+    .contact-detail .icon {
+      width: 40px; height: 40px; border-radius: 10px; background: var(--accent-soft);
+      color: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 18px;
+    }
+    .contact-form-card {
+      background: var(--card); border: 1px solid var(--border); border-radius: 20px;
+      padding: 32px; box-shadow: var(--shadow);
+    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+    .form-group label { font-size: 13px; font-weight: 700; color: var(--text); }
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%; padding: 11px 14px; font-family: 'Manrope', sans-serif; font-size: 14px;
+      background: var(--bg-alt); color: var(--text); border: 1.5px solid var(--border);
+      border-radius: 10px; outline: none; transition: border-color .2s, box-shadow .2s;
+      resize: vertical;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(91,33,182,.12); }
+    .form-group .err { font-size: 12px; color: #ef4444; display: none; }
+    .form-group.invalid input,
+    .form-group.invalid textarea { border-color: #ef4444; }
+    .form-group.invalid .err { display: block; }
+    #form-success {
+      display: none; text-align: center; padding: 24px;
+      color: #059669; font-weight: 700; font-size: 15px;
+    }
+    #form-success .checkmark { font-size: 40px; display: block; margin-bottom: 8px; }
+
+    /* ── Admin ───────────────────────────── */
+    #admin-section { background: var(--bg-alt); display: none; }
+    #admin-section.visible { display: block; }
+
+    .admin-wrapper { max-width: 640px; margin: 0 auto; }
+    .admin-login-card {
+      background: var(--card); border: 1px solid var(--border); border-radius: 20px;
+      padding: 36px; box-shadow: var(--shadow); text-align: center;
+    }
+    .admin-login-card h2 { font-family: 'Libre Baskerville', serif; font-size: 24px; margin-bottom: 8px; }
+    .admin-login-card p  { color: var(--text-muted); font-size: 14px; margin-bottom: 28px; }
+    #admin-responses { display: none; }
+    #admin-responses.visible { display: block; }
+    .response-card {
+      background: var(--card); border: 1px solid var(--border); border-radius: 16px;
+      padding: 20px 24px; margin-bottom: 16px; box-shadow: var(--shadow);
+    }
+    .response-header {
+      display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;
+    }
+    .response-name { font-weight: 700; font-size: 15px; }
+    .response-time { font-size: 11px; color: var(--text-muted); }
+    .response-email { font-size: 12px; color: var(--accent); margin-bottom: 8px; }
+    .response-subject { font-size: 13px; font-weight: 700; margin-bottom: 6px; color: var(--text); }
+    .response-msg { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+    .no-responses { text-align: center; padding: 40px; color: var(--text-muted); }
+    .admin-logout-btn {
+      margin-bottom: 20px; background: none; border: 1px solid var(--border);
+      color: var(--text-muted); padding: 8px 18px; border-radius: 8px;
+      cursor: pointer; font-size: 13px; font-weight: 600;
+    }
+    .admin-logout-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .pass-wrap { position: relative; }
+    .pass-wrap input { padding-right: 44px; }
+    .pass-eye {
+      position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+      background: none; border: none; cursor: pointer; font-size: 18px; color: var(--text-muted);
+    }
+    #login-error { color: #ef4444; font-size: 13px; margin-top: 8px; display: none; }
+
+    /* ── Footer ──────────────────────────── */
+    footer {
+      background: var(--text); color: rgba(255,255,255,.5);
+      padding: 32px 0; text-align: center; font-size: 13px;
+    }
+    footer strong { color: #fff; }
+    .footer-admin {
+      margin-top: 10px; font-size: 11px; cursor: pointer;
+      color: rgba(255,255,255,.2); text-decoration: none;
+      transition: color .2s;
+    }
+    .footer-admin:hover { color: rgba(255,255,255,.5); }
+    .social-links { display: flex; justify-content: center; gap: 16px; margin-bottom: 16px; }
+    .social-links a {
+      color: rgba(255,255,255,.5); text-decoration: none; font-size: 13px;
+      font-weight: 600; transition: color .2s;
+    }
+    .social-links a:hover { color: #fff; }
+
+    /* ── Responsive ──────────────────────── */
+    @media (max-width: 780px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .hero-grid,
+      .about-grid,
+      .contact-wrapper { grid-template-columns: 1fr; }
+      .hero-visual { display: none; }
+      .form-row { grid-template-columns: 1fr; }
+      .hero-btns a { width: 100%; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════ HEADER / NAV ═══════════════════════ -->
+<header>
+  <nav class="container nav-inner">
+    <a href="#hero" class="nav-logo">My<span>Portfolio</span></a>
+    <div class="nav-links">
+      <a href="#hero">Home</a>
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <div class="nav-right">
+      <button id="theme-btn" aria-label="Toggle theme">🌙</button>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+  <div id="mobile-menu">
+    <a href="#hero"     onclick="closeMobileMenu()">Home</a>
+    <a href="#about"    onclick="closeMobileMenu()">About</a>
+    <a href="#skills"   onclick="closeMobileMenu()">Skills</a>
+    <a href="#projects" onclick="closeMobileMenu()">Projects</a>
+    <a href="#contact"  onclick="closeMobileMenu()">Contact</a>
+  </div>
+</header>
+
+<main>
+
+  <!-- ═══════════════════════ HERO ═══════════════════════════ -->
+  <section id="hero">
+    <div class="container hero-grid">
+      <div>
+        <div class="hero-eyebrow">Available for Opportunities</div>
+        <h1 class="hero-name">Hi, I'm<br><em>Veeksha</em></h1>
+        <p class="hero-sub">
+          A passionate <strong>Full Stack Developer</strong> who crafts clean,
+          performant web applications from pixel perfect UIs to robust APIs.
+        </p>
+        <div class="hero-btns">
+          <a href="#projects" class="btn btn-primary">View My Work</a>
+          <a href="#contact"  class="btn btn-outline">Get In Touch</a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-dots"></div>
+        <div class="hero-avatar">V</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════ ABOUT ═══════════════════════════ -->
+  <section id="about">
+    <div class="container">
+      <p class="section-eyebrow">About Me</p>
+      <h2 class="section-title">A glimpse into my journey, interests, and what drives me.</h2>
+      <div class="section-rule"></div>
+      <div class="about-grid">
+        <div>
+          <div class="about-card">
+            <div class="about-initials">V</div>
+            <h3>Veeksha</h3>
+            <p>Full Stack Developer</p>
+            <div class="about-stat-row">
+              <div class="about-stat">
+                <div class="about-stat-num">1</div>
+                <div class="about-stat-label">Years Experience</div>
+              </div>
+              <div class="about-stat">
+                <div class="about-stat-num">15+</div>
+                <div class="about-stat-label">Projects Built</div>
+              </div>
+              <div class="about-stat">
+                <div class="about-stat-num">8+</div>
+                <div class="about-stat-label">Technologies</div>
+              </div>
+              <div class="about-stat">
+                <div class="about-stat-num">5+</div>
+                <div class="about-stat-label">Happy Clients</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="about-body">
+          <h2>I build things that <em style="font-family:'Libre Baskerville',serif; color:var(--accent)">live on the web</em></h2>
+          <p>
+            I'm a full stack developer passionate about building products that are both
+            technically solid and genuinely enjoyable to use. I care deeply about clean
+            code, thoughtful architecture, and interfaces that feel effortless.
+          </p>
+          <p>
+            Currently pursuing my education in web development, I've built everything
+            from REST APIs and MERN stack applications to responsive landing pages.
+            I love the entire stack — there's something uniquely satisfying about owning
+            a feature from database schema all the way to UI animation.
+          </p>
+          <p>
+            When I'm not coding, you'll find me exploring design systems, reading about
+            software architecture, or contributing to open source projects.
+          </p>
+          <div class="about-tags">
+            <span class="tag">React</span>
+            <span class="tag">Node.js</span>
+            <span class="tag">MongoDB</span>
+            <span class="tag">Express</span>
+            <span class="tag">JavaScript</span>
+            <span class="tag">Python</span>
+            <span class="tag">Problem Solver</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════ SKILLS ══════════════════════════ -->
+  <section id="skills">
+    <div class="container">
+      <p class="section-eyebrow">Technical Skills</p>
+      <h2 class="section-title">What I work with</h2>
+      <div class="section-rule"></div>
+      <div class="skills-grid">
+        <article class="skill-card">
+          <div class="skill-icon">🎨</div>
+          <h4>Frontend</h4>
+          <div class="skill-list">
+            <span class="skill-pill">HTML5</span>
+            <span class="skill-pill">CSS3</span>
+            <span class="skill-pill">JavaScript</span>
+            <span class="skill-pill">React</span>
+            <span class="skill-pill">Bootstrap</span>
+            <span class="skill-pill">Tailwind CSS</span>
+          </div>
+        </article>
+        <article class="skill-card">
+          <div class="skill-icon">⚙️</div>
+          <h4>Backend</h4>
+          <div class="skill-list">
+            <span class="skill-pill">Node.js</span>
+            <span class="skill-pill">Express.js</span>
+            <span class="skill-pill">REST APIs</span>
+            <span class="skill-pill">Python</span>
+            <span class="skill-pill">JWT Auth</span>
+          </div>
+        </article>
+        <article class="skill-card">
+          <div class="skill-icon">🗄️</div>
+          <h4>Database</h4>
+          <div class="skill-list">
+            <span class="skill-pill">MongoDB</span>
+            <span class="skill-pill">MySQL</span>
+            <span class="skill-pill">Mongoose</span>
+          </div>
+        </article>
+        <article class="skill-card">
+          <div class="skill-icon">🛠️</div>
+          <h4>Tools & DevOps</h4>
+          <div class="skill-list">
+            <span class="skill-pill">Git & GitHub</span>
+            <span class="skill-pill">VS Code</span>
+            <span class="skill-pill">Postman</span>
+            <span class="skill-pill">Docker</span>
+            <span class="skill-pill">Vite</span>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════ PROJECTS ════════════════════════ -->
+  <section id="projects">
+    <div class="container">
+      <p class="section-eyebrow">Portfolio</p>
+      <h2 class="section-title">Things I've built</h2>
+      <div class="section-rule"></div>
+      <div class="projects-grid">
+        <article class="project-card">
+          <div class="project-banner" style="background: linear-gradient(135deg,#ede9fe,#c4b5fd)">🛍️</div>
+          <div class="project-body">
+            <h3>ShopEase — E-Commerce Platform</h3>
+            <p>A full-featured e-commerce application with product listings, cart management, Stripe payments, and an admin dashboard for inventory management.</p>
+            <div class="project-tags">
+              <span class="tag">React</span>
+              <span class="tag">Node.js</span>
+              <span class="tag">MongoDB</span>
+            </div>
+            <div class="project-links">
+              <a href="#">Live Demo</a>
+              <a href="#">GitHub</a>
+            </div>
+          </div>
+        </article>
+        <article class="project-card">
+          <div class="project-banner" style="background: linear-gradient(135deg,#dbeafe,#93c5fd)">✅</div>
+          <div class="project-body">
+            <h3>TaskFlow — Project Manager</h3>
+            <p>A Kanban-style task management app with real-time updates, drag-and-drop, team collaboration features, and email notifications.</p>
+            <div class="project-tags">
+              <span class="tag">MERN Stack</span>
+              <span class="tag">Socket.io</span>
+            </div>
+            <div class="project-links">
+              <a href="#">Live Demo</a>
+              <a href="#">GitHub</a>
+            </div>
+          </div>
+        </article>
+        <article class="project-card">
+          <div class="project-banner" style="background: linear-gradient(135deg,#d1fae5,#6ee7b7)">🌤️</div>
+          <div class="project-body">
+            <h3>SkyWatch — Weather Dashboard</h3>
+            <p>A weather dashboard consuming OpenWeatherMap API with 7-day forecasts, location search, interactive charts, and persisted user preferences.</p>
+            <div class="project-tags">
+              <span class="tag">JavaScript</span>
+              <span class="tag">Chart.js</span>
+              <span class="tag">REST API</span>
+            </div>
+            <div class="project-links">
+              <a href="#">Live Demo</a>
+              <a href="#">GitHub</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════ CONTACT ═════════════════════════ -->
+  <section id="contact">
+    <div class="container">
+      <p class="section-eyebrow">Contact</p>
+      <h2 class="section-title">Let's work together</h2>
+      <div class="section-rule"></div>
+      <div class="contact-wrapper">
+        <div class="contact-info">
+          <h2>Get in<br>touch</h2>
+          <p>Have a project in mind, a job opportunity, or just want to say hello? My inbox is always open.</p>
+          <div class="contact-detail">
+            <div class="icon">📧</div>
+            <span>xyz@gmail.com</span>
+          </div>
+          <div class="contact-detail">
+            <div class="icon">📍</div>
+            <span>Mangaluru, Karnataka, India</span>
+          </div>
+          <div class="contact-detail">
+            <div class="icon">💼</div>
+            <span>Open to full-time & freelance</span>
+          </div>
+        </div>
+        <div class="contact-form-card">
+          <form id="contact-form" novalidate>
+            <div class="form-row">
+              <div class="form-group" id="fg-name">
+                <label for="c-name">Full Name *</label>
+                <input type="text" id="c-name" placeholder="Name" autocomplete="name" />
+                <span class="err">Please enter your name.</span>
+              </div>
+              <div class="form-group" id="fg-email">
+                <label for="c-email">Email Address *</label>
+                <input type="email" id="c-email" placeholder="you@example.com" autocomplete="email" />
+                <span class="err">Enter a valid email address.</span>
+              </div>
+            </div>
+            <div class="form-group" id="fg-subject">
+              <label for="c-subject">Subject *</label>
+              <input type="text" id="c-subject" placeholder="What's this about?" />
+              <span class="err">Please enter a subject.</span>
+            </div>
+            <div class="form-group" id="fg-message">
+              <label for="c-message">Message *</label>
+              <textarea id="c-message" rows="5" placeholder="Tell me about your project or inquiry…"></textarea>
+              <span class="err">Message must be at least 20 characters.</span>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width:100%; margin-top:4px">
+              Send Message →
+            </button>
+          </form>
+          <div id="form-success">
+            <span class="checkmark">✅</span>
+            Message sent! I'll get back to you soon.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════ ADMIN ════════════════════════════ -->
+  <section id="admin-section">
+    <div class="container admin-wrapper">
+      <p class="section-eyebrow">Admin Panel</p>
+      <h2 class="section-title">Response Inbox</h2>
+      <div class="section-rule"></div>
+
+      <!-- Login Card -->
+      <div id="admin-login-card" class="admin-login-card">
+        <div style="font-size:40px; margin-bottom:12px">🔐</div>
+        <h2>Admin Access</h2>
+        <p>Enter the admin password to view contact form responses.</p>
+        <div class="form-group" style="text-align:left">
+          <label for="admin-pass">Password</label>
+          <div class="pass-wrap">
+            <input type="password" id="admin-pass" placeholder="Enter admin password" autocomplete="off" />
+            <button class="pass-eye" id="pass-toggle" type="button" title="Show/hide password">👁️</button>
+          </div>
+        </div>
+        <p id="login-error">Incorrect password. Try again.</p>
+        <button class="btn btn-primary" id="admin-login-btn" style="width:100%; margin-top:8px">Login</button>
+      </div>
+
+      <!-- Responses (shown after login) -->
+      <div id="admin-responses">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px">
+          <span id="response-count" style="font-size:14px; color:var(--text-muted)"></span>
+          <button class="admin-logout-btn" id="admin-logout-btn">← Logout</button>
+        </div>
+        <div id="responses-list"></div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ═══════════════════════ FOOTER ══════════════════════════ -->
+<footer>
+  <div class="container">
+    <div class="social-links">
+      <a href="#">GitHub</a>
+      <a href="#">LinkedIn</a>
+    </div>
+    <p>Designed &amp; built by <strong>Veeksha</strong> </p>
+    <a class="footer-admin" id="footer-admin-link">⚙ Admin</a>
+  </div>
+</footer>
+
+<script>
+// ── Theme Toggle ────────────────────────────────────────────────────
+const themeBtn = document.getElementById('theme-btn');
+const html     = document.documentElement;
+
+function applyTheme(t) {
+  html.setAttribute('data-theme', t);
+  themeBtn.textContent = t === 'dark' ? '☀️' : '🌙';
+  localStorage.setItem('portfolio-theme', t);
+}
+
+(function initTheme() {
+  const saved = localStorage.getItem('portfolio-theme') || 'light';
+  applyTheme(saved);
+})();
+
+themeBtn.addEventListener('click', () => {
+  applyTheme(html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+});
+
+// ── Mobile Menu ─────────────────────────────────────────────────────
+const hamburger  = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobile-menu');
+
+hamburger.addEventListener('click', () => {
+  mobileMenu.classList.toggle('open');
+});
+
+function closeMobileMenu() {
+  mobileMenu.classList.remove('open');
+}
+
+// ── Contact Form ────────────────────────────────────────────────────
+const RESPONSES_KEY = 'portfolio_responses';
+
+function getResponses() {
+  return JSON.parse(localStorage.getItem(RESPONSES_KEY) || '[]');
+}
+
+function saveResponse(entry) {
+  const all = getResponses();
+  all.unshift(entry);
+  localStorage.setItem(RESPONSES_KEY, JSON.stringify(all));
+}
+
+function validateField(id, groupId, test) {
+  const group = document.getElementById(groupId);
+  const valid = test(document.getElementById(id).value.trim());
+  group.classList.toggle('invalid', !valid);
+  return valid;
+}
+
+function isEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
+
+document.getElementById('contact-form').addEventListener('submit', function(e) {
+  e.preventDefault();
+
+  const nameOk    = validateField('c-name',    'fg-name',    v => v.length >= 2);
+  const emailOk   = validateField('c-email',   'fg-email',   v => isEmail(v));
+  const subjectOk = validateField('c-subject', 'fg-subject', v => v.length >= 3);
+  const msgOk     = validateField('c-message', 'fg-message', v => v.length >= 20);
+
+  if (!nameOk || !emailOk || !subjectOk || !msgOk) return;
+
+  const entry = {
+    name:      document.getElementById('c-name').value.trim(),
+    email:     document.getElementById('c-email').value.trim(),
+    subject:   document.getElementById('c-subject').value.trim(),
+    message:   document.getElementById('c-message').value.trim(),
+    timestamp: new Date().toISOString()
+  };
+
+  saveResponse(entry);
+
+  document.getElementById('contact-form').style.display = 'none';
+  document.getElementById('form-success').style.display = 'block';
+
+  setTimeout(() => {
+    document.getElementById('contact-form').style.display = 'block';
+    document.getElementById('form-success').style.display = 'none';
+    document.getElementById('contact-form').reset();
+    ['fg-name','fg-email','fg-subject','fg-message'].forEach(id =>
+      document.getElementById(id).classList.remove('invalid')
+    );
+  }, 3500);
+});
+
+// ── Admin Section: Show/Hide ────────────────────────────────────────
+document.getElementById('footer-admin-link').addEventListener('click', function() {
+  const sec = document.getElementById('admin-section');
+  sec.classList.toggle('visible');
+  if (sec.classList.contains('visible')) {
+    sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+});
+
+// ── Admin: Show/Hide Password ───────────────────────────────────────
+document.getElementById('pass-toggle').addEventListener('click', function() {
+  const input = document.getElementById('admin-pass');
+  const isHidden = input.type === 'password';
+  input.type     = isHidden ? 'text' : 'password';
+  this.textContent = isHidden ? '🙈' : '👁️';
+});
+
+// ── Admin: Login ────────────────────────────────────────────────────
+const ADMIN_PASSWORD = 'admin123';
+
+document.getElementById('admin-login-btn').addEventListener('click', function() {
+  const pass  = document.getElementById('admin-pass').value;
+  const errEl = document.getElementById('login-error');
+
+  if (pass === ADMIN_PASSWORD) {
+    errEl.style.display = 'none';
+    document.getElementById('admin-login-card').style.display = 'none';
+    loadAdminResponses();
+  } else {
+    errEl.style.display = 'block';
+    document.getElementById('admin-pass').focus();
+  }
+});
+
+document.getElementById('admin-pass').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') document.getElementById('admin-login-btn').click();
+});
+
+// ── Admin: Logout ───────────────────────────────────────────────────
+document.getElementById('admin-logout-btn').addEventListener('click', function() {
+  document.getElementById('admin-responses').classList.remove('visible');
+  const card = document.getElementById('admin-login-card');
+  card.style.display = 'block';
+  document.getElementById('admin-pass').value = '';
+  document.getElementById('login-error').style.display = 'none';
+});
+
+// ── Admin: Render Responses ─────────────────────────────────────────
+function loadAdminResponses() {
+  const responses = getResponses();
+  const container = document.getElementById('responses-list');
+  const countEl   = document.getElementById('response-count');
+  const respDiv   = document.getElementById('admin-responses');
+
+  countEl.textContent = responses.length === 0
+    ? 'No responses yet.'
+    : `${responses.length} response${responses.length > 1 ? 's' : ''} received`;
+
+  if (responses.length === 0) {
+    container.innerHTML = `
+      <div class="no-responses">
+        <div style="font-size:40px;margin-bottom:12px">📭</div>
+        <p style="font-size:15px;font-weight:600">No messages yet</p>
+        <p style="font-size:13px;margin-top:4px">Contact form submissions will appear here.</p>
+      </div>`;
+  } else {
+    container.innerHTML = responses.map(function(r) {
+      const d   = new Date(r.timestamp);
+      const fmt = d.toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric' })
+                + ' at ' + d.toLocaleTimeString('en-US', { hour:'2-digit', minute:'2-digit' });
+      return `
+        <div class="response-card">
+          <div class="response-header">
+            <span class="response-name">${escapeHtml(r.name)}</span>
+            <span class="response-time">🕐 ${fmt}</span>
+          </div>
+          <div class="response-email">✉️ ${escapeHtml(r.email)}</div>
+          <div class="response-subject">📌 ${escapeHtml(r.subject)}</div>
+          <div class="response-msg">${escapeHtml(r.message)}</div>
+        </div>`;
+    }).join('');
+  }
+
+  respDiv.classList.add('visible');
+}
+
+function escapeHtml(str) {
+  return str
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+</script>
+</body>
+</html>
