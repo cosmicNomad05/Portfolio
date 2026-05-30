@@ -1,4 +1,4 @@
-# 🌐 Veeksha — Portfolio Website
+# 🌐 Portfolio Website
 
 A fully responsive personal portfolio and resume website built with plain HTML, CSS, and JavaScript. No frameworks, no dependencies — just open `index.html` and it works.
 
